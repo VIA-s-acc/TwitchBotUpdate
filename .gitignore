@@ -7,6 +7,11 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+.google-cookie
+bot_logs.log
+bot.db
+config.py
+.venv/
 .Python
 build/
 develop-eggs/
