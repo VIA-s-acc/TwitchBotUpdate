@@ -28,6 +28,7 @@ class SearchCog(commands.Cog):
             user_agent = UAGNT
 
         )
+        ic('wiki_wiki')
         page_py = wiki_wiki.page(query)
         if page_py.exists():
                 msg = f"{ctx.author.name}, поиск по запросу <{query}> | "+page_py.text[0:min(len(page_py.text), 1500)]
@@ -36,12 +37,15 @@ class SearchCog(commands.Cog):
                 return
         search_results = search(query=query,num=3,lang='ru',stop=3,pause=0.0)
         i = 1
-        mess = f'В wikipedia не было найдено соотвествующей информации по запросу <{query}>.\nНиже даны ссылки ,которые могут помочь.\n'
+        mess = WIKIERRMSG.format(query=query) 
+        ic("wiki_wiki err")
         for url in search_results:
                 mess += f' | URL {i} : {url}'
                 i += 1
         send_mess = mess[:490-len(f'{ctx.author.name}')]
         await ctx.send(f"{ctx.author.name}, {send_mess}" )
-        
+        ic()
+
+
 def prepare(client):
     client.add_cog(SearchCog(client))

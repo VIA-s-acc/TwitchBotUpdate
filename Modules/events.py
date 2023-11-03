@@ -44,12 +44,11 @@ class EventCog(commands.Cog):
         user2_name TEXT,
         date TEXT
         )""")
-        ic("TABLE channel.")
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS channel(
-        channel_name,
-        inst TEXT,
-        ds TEXT,
-        tg TEXT
+        ic("TABLE comms.")
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS comms(
+        channel_name TEXT,
+        comm_name TEXT PRIMARY KEY,
+        comm_text TEXT
         )""")
         ic()
 
@@ -58,6 +57,22 @@ class EventCog(commands.Cog):
     async def _in_command_err(self, ctx, exception):
             if str(exception).lower().startswith("no valid command was passed"):
                 return
+            cl = str(exception).lower().split(' ')
+            print(cl)
+            if cl[0] == 'no' and cl[1] == 'command' and cl[3] == 'was' and cl[4] == 'found.':
+                cl[2] = cl[2][1:len(cl[2])-1]
+                try:
+                    if self.cursor.execute(CCCHECK.format(
+                    COMM = cl[2],
+                    CHNL = ctx.channel.name)).fetchone() is not None:
+                        print(11111)
+                        comm_text = self.cursor.execute(CCCSEL.format(
+                            COMM = cl[2],
+                            CHNL = ctx.channel.name
+                        )).fetchone()[0]
+                        await ctx.channel.send(f'{ctx.author.name}, {comm_text}')  
+                        return    
+                except:pass
             if "?" in str(exception):
                 return 
             await ctx.send(f"{ctx.author.name}, произошла ошибка при выполнении команды | TBERRMSG : {str(exception)[:450]}")
@@ -70,7 +85,8 @@ class EventCog(commands.Cog):
         if message.echo:
             return
 
-        await self.client.handle_commands(message)
+
+        # await self.client.handle_commands(message)
         if self.cursor.execute(IDSELECTMSG.format(
                 ID = message.author.id,
                 CHNL = message.channel.name
@@ -94,8 +110,7 @@ class EventCog(commands.Cog):
                 NAME = message.author.name,
                 ID = message.author.id,
                 MSG = message.content,
-                DATE = datetime.datetime.now()))
-                                                                                                    
+                DATE = datetime.datetime.now()))                                                                                     
         self.cursor.execute(LOGSMSG.format(
         ID = message.author.id,
         NAME = message.author.name,

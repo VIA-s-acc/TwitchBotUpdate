@@ -6,7 +6,6 @@ DIRorigin = os.path.abspath(os.path.join(os.getcwd()))
 DBpath = os.path.join(DIRorigin, "bot.db")
 from config import DEBUG
 from msgs import *
-import datetime
 from bs4 import BeautifulSoup
 import requests
 
@@ -23,9 +22,9 @@ class HoroscopeCog(commands.Cog):
     @commands.command(aliases = ["гороскоп"])
     async def horoscope(self, ctx, sign, day = "сегодня"):
         dic={'овен':'Aries','телец':'Taurus','близнецы':'Gemini',
-         'рак':'Cancer','лев':'Leo','дева':'Virgo','весы':'Libra',
-         'скорпион':'Scorpio','стрелец':'Sagittarius','козерог':'Capricorn',
-         'водолей':'Aquarius','рыбы':'Pisces'} 
+        'рак':'Cancer','лев':'Leo','дева':'Virgo','весы':'Libra',
+        'скорпион':'Scorpio','стрелец':'Sagittarius','козерог':'Capricorn',
+        'водолей':'Aquarius','рыбы':'Pisces'} 
         try:
             Sign = dic[sign.lower()].lower()
         except:
@@ -43,7 +42,7 @@ class HoroscopeCog(commands.Cog):
         url = (
             f"https://horoscopes.rambler.ru/{Sign}/{Day}")
         soup = BeautifulSoup(requests.get(url).content,
-                         "html.parser")
+                        "html.parser")
         text = soup.find("div", class_="_1E4Zo _3BLIa").p.text
         send = f"{ctx.author.name}, гороскоп на {day.lower()} : "
         await ctx.send(f"{send} {text[:(499-len(send))]}")
