@@ -161,7 +161,7 @@ class Marriage(commands.Cog):
                 ic("UMRGNOT")
             return
         else:
-            user2_name = self.cursor.execute(SELUSS.format(
+            user2_name = self.cursor.execute(SELUSSN.format(
                 USRF = user.id,
                 CHNL = ctx.channel.name)).fetchone()[0]
             date_now = datetime.datetime.now()
