@@ -12,12 +12,19 @@ import platform
 if not DEBUG:
     ic.disable() 
     
-class MyCog(commands.Cog):
+class info(commands.Cog):
     
     def __init__(self,client):
         self.client = client
         self.connection = sqlite3.connect(DBpath)
         self.cursor = self.connection.cursor()
+
+    async def get_size(self,bytes, suffix="B"):
+        factor = 1024
+        for unit in ["", "K", "M", "G", "T", "P"]:
+            if bytes < factor:
+                return f"{bytes:.2f}{unit}{suffix}"
+            bytes /= factor
 
     @commands.command(aliases = ['инфо'])
     async def info(self, ctx):
@@ -43,4 +50,4 @@ class MyCog(commands.Cog):
         ic()
         
 def prepare(client):
-    client.add_cog(MyCog(client))
+    client.add_cog(info(client))
