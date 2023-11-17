@@ -57,6 +57,7 @@ SELUSSN = "SELECT user2_name FROM marry WHERE user1_id = {USRF} AND channel_name
 DELFMRS = "DELETE from marry where user1_id = {USRF} AND channel_name = '{CHNL}'"
 
 
+
 #CustomCommandMsg
 CCCHECK = "SELECT 1 FROM comms WHERE comm_name = '{COMM}' AND channel_name = '{CHNL}'"
 CCCSEL = "SELECT comm_text FROM comms WHERE comm_name = '{COMM}' AND channel_name = '{CHNL}'"
