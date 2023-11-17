@@ -125,7 +125,7 @@ class Marriage(commands.Cog):
                 USRF = ctx.author.id,
                 CHNL = ctx.channel.name
             )).fetchone()[0]
-            user2_name = self.cursor.execute(SELUSS.format(
+            user2_name = self.cursor.execute(SELUSSN.format(
                 USRF = ctx.author.id,
                 CHNL = ctx.channel.name)).fetchone()[0]
             self.cursor.execute(DELFMRS.format(
