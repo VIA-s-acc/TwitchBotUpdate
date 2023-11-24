@@ -65,7 +65,6 @@ class EventCog(commands.Cog):
                     if self.cursor.execute(CCCHECK.format(
                     COMM = cl[2],
                     CHNL = ctx.channel.name)).fetchone() is not None:
-                        print(11111)
                         comm_text = self.cursor.execute(CCCSEL.format(
                             COMM = cl[2],
                             CHNL = ctx.channel.name
